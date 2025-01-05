@@ -5,28 +5,31 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+/// <summary>
+/// Manages the game state, including player lives, score, and respawning.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] Player player;
-    [SerializeField] ParticleSystem explosionParticles;
+    [SerializeField] private Player player;
+    [SerializeField] private ParticleSystem explosionParticles;
     [Header("User Interface")]
-    [SerializeField] TextMeshProUGUI livesText;
-    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI livesText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     [Header("Gameplay Values")]
-    [SerializeField] int lives = 3;
-    [SerializeField] float respawnDelay = 3f;
-    [SerializeField] float respawnImmunityTime = 3f;
+    [SerializeField] private int lives = 3;
+    [SerializeField] private float respawnDelay = 3f;
+    [SerializeField] private float respawnImmunityTime = 3f;
     [Header("Layer Values")]
-    [SerializeField] string ignoreCollisionsLayer = "IgnoreCollisions";
-    [SerializeField] string defaultPlayerLayer = "Player";
+    [SerializeField] private string ignoreCollisionsLayer = "IgnoreCollisions";
+    [SerializeField] private string defaultPlayerLayer = "Player";
     [Header("Scoring Values")]
-    [SerializeField] float largeAsteroidSize = 2f;
-    [SerializeField] float mediumAsteroidSize = 1.25f;
-    [SerializeField] float smallAsteroidSize = 0.75f;
-    [SerializeField] int largeAsteroidScore = 50;
-    [SerializeField] int mediumAsteroidScore = 100;
-    [SerializeField] int smallAsteroidScore = 150;
+    [SerializeField] private float largeAsteroidSize = 2f;
+    [SerializeField] private float mediumAsteroidSize = 1.25f;
+    [SerializeField] private float smallAsteroidSize = 0.75f;
+    [SerializeField] private int largeAsteroidScore = 50;
+    [SerializeField] private int mediumAsteroidScore = 100;
+    [SerializeField] private int smallAsteroidScore = 150;
 
     private int score = 0;
 
@@ -49,7 +52,7 @@ public class GameManager : MonoBehaviour
         HandleLives();
     }
 
-    void HandleLives()
+    private void HandleLives()
     {
         // Check GameOver or Respawn
         lives -= 1;
@@ -63,7 +66,7 @@ public class GameManager : MonoBehaviour
             Invoke(nameof(Respawn), respawnDelay);
     }
 
-    void HandleAsteroidScore(Asteroid destroyedAsteroid)
+    private void HandleAsteroidScore(Asteroid destroyedAsteroid)
     {
         // Increase Score Based on Asteroid Size
         if (destroyedAsteroid.size < smallAsteroidSize)
@@ -76,7 +79,7 @@ public class GameManager : MonoBehaviour
         UpdateText(scoreText, score.ToString());
     }
 
-    void Respawn()
+    private void Respawn()
     {
         // Position and ReEnable Player
         player.transform.position = Vector3.zero;
@@ -86,19 +89,19 @@ public class GameManager : MonoBehaviour
         Invoke(nameof(EnableCollisions), respawnImmunityTime);
     }
 
-    void EnableCollisions()
+    private void EnableCollisions()
     {
         // Reset Player Physics Layer
         player.gameObject.layer = LayerMask.NameToLayer(defaultPlayerLayer);
     }
 
-    void GameOver()
+    private void GameOver()
     {
         // Reload Scene on Game Over
         SceneManager.LoadScene(0);
     }
 
-    void PlayParticles(ParticleSystem particles, Vector2 position)
+    private void PlayParticles(ParticleSystem particles, Vector2 position)
     {
         // Position and Play Particles
         GameObject newParticles = Instantiate(particles.gameObject, position, Quaternion.identity);
@@ -106,6 +109,6 @@ public class GameManager : MonoBehaviour
     }
 
     // Update Any Text Element With a String Value
-    void UpdateText(TextMeshProUGUI textElement, string value) =>
+    private void UpdateText(TextMeshProUGUI textElement, string value) =>
         textElement.text = value;
 }

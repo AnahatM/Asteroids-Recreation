@@ -39,6 +39,10 @@ public class SceneFader : MonoBehaviour
         StartCoroutine(FadeOut(targetSceneIndex));
     }
 
+    /// <summary>
+    /// Fades out to a specified scene, given the scene name
+    /// </summary>
+    /// <param name="targetScene">Exact string of scene name</param>
     private IEnumerator FadeOut(string targetScene)
     {
         float t = 0f;
@@ -57,6 +61,10 @@ public class SceneFader : MonoBehaviour
         SceneManager.LoadScene(targetScene);
     }
 
+    /// <summary>
+    /// Fades out to a scene based on index in Unity build settings
+    /// </summary>
+    /// <param name="targetSceneIndex">The scene's index in the build settings.</param>
     private IEnumerator FadeOut(int targetSceneIndex)
     {
         float t = 0f;
@@ -75,6 +83,9 @@ public class SceneFader : MonoBehaviour
         SceneManager.LoadScene(targetSceneIndex);
     }
 
+    /// <summary>
+    /// Fades in from a scene
+    /// </summary>
     private IEnumerator FadeIn()
     {
         float t = 1f;

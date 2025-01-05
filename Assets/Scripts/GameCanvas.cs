@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Manages the game canvas and its interaction with the main camera.
+/// </summary>
 [RequireComponent(typeof(Canvas))]
 public class GameCanvas : MonoBehaviour
 {

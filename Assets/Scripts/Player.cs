@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Controls the player character, including movement and shooting.
+/// </summary>
 public class Player : MonoBehaviour
 {
     [Header("References")]

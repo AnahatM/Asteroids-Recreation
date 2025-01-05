@@ -1,23 +1,26 @@
 using UnityEngine;
 
+/// <summary>
+/// Controls the behavior of asteroids, including movement and collision handling.
+/// </summary>
 public class Asteroid : MonoBehaviour
 {
     [Header("Values")]
-    [SerializeField] Sprite[] sprites;
+    [SerializeField] private Sprite[] sprites;
     [SerializeField] public float minSize = 0.5f;
     [SerializeField] public float maxSize = 2f;
-    [SerializeField] float speed = 50f;
-    [SerializeField] float maxLifetime = 30f;
-    [SerializeField] float spawnPositionOffset = 1f;
+    [SerializeField] private float speed = 50f;
+    [SerializeField] private float maxLifetime = 30f;
+    [SerializeField] private float spawnPositionOffset = 1f;
 
-    SpriteRenderer spriteRenderer;
-    Rigidbody2D rb;
-    GameManager gameManager;
-    AudioManager audioManager;
+    private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rb;
+    private GameManager gameManager;
+    private AudioManager audioManager;
 
     public float size;
 
-    void Awake()
+    private void Awake()
     {
         // Get References
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -26,17 +29,17 @@ public class Asteroid : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
     }
 
-    void Start()
+    private void Start()
     {
         SetRandomCharacteristics();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         HandleCollision(collision);
     }
 
-    void SetRandomCharacteristics()
+    private void SetRandomCharacteristics()
     {
         // Randomize Sprite, Rotation, Scale, and Mass
         spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
@@ -53,7 +56,7 @@ public class Asteroid : MonoBehaviour
         Destroy(gameObject, maxLifetime);
     }
 
-    void HandleCollision(Collision2D collision)
+    private void HandleCollision(Collision2D collision)
     {
         // Handle Collision With Bullets
         if (!collision.gameObject.CompareTag("Bullet")) return;
@@ -71,7 +74,7 @@ public class Asteroid : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void CreateSplit()
+    private void CreateSplit()
     {
         // Randomize Half Position with Offset
         Vector2 newPosition = transform.position;

@@ -2,21 +2,24 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Controls the behavior of bullets shot by the player.
+/// </summary>
 public class Bullet : MonoBehaviour
 {
     [Header("Gameplay Values")]
-    [SerializeField] float bulletSpeed = 500f;
-    [SerializeField] float maxLifetime = 10f;
+    [SerializeField] private float bulletSpeed = 500f;
+    [SerializeField] private float maxLifetime = 10f;
 
-	Rigidbody2D rb;
+    private Rigidbody2D rb;
 
-    void Awake()
+    private void Awake()
     {
         // Get References
-        rb = GetComponent<Rigidbody2D>();    
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         HandleBulletCollision();
     }
@@ -29,7 +32,7 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, maxLifetime);
     }
 
-    void HandleBulletCollision()
+    private void HandleBulletCollision()
     {
         // Destroy Bullet Upon Collision
         Destroy(gameObject);

@@ -2,29 +2,32 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// Spawns asteroids at random positions and trajectories.
+/// </summary>
 public class AsteroidSpawner : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] Asteroid asteroidPrefab;
-    [SerializeField] Transform asteroidsParent;
-    [SerializeField] string asteroidsParentName = "Asteroids";
+    [SerializeField] private Asteroid asteroidPrefab;
+    [SerializeField] private Transform asteroidsParent;
+    [SerializeField] private string asteroidsParentName = "Asteroids";
     [Header("Spawning Values")]
-    [SerializeField] float spawnRate = 1f;
-    [SerializeField] int spawnAmount = 1;
-    [SerializeField] float spawnDistance = 15f;
-    [SerializeField] float trajectoryVariance = 15f;
+    [SerializeField] private float spawnRate = 1f;
+    [SerializeField] private int spawnAmount = 1;
+    [SerializeField] private float spawnDistance = 15f;
+    [SerializeField] private float trajectoryVariance = 15f;
 
     private void Awake()
     {
         if (!asteroidsParent) asteroidsParent = GameObject.Find(asteroidsParentName).transform;
     }
 
-    void Start()
+    private void Start()
     {
         InvokeRepeating(nameof(Spawn), spawnRate, spawnRate);
     }
 
-    void Spawn()
+    private void Spawn()
     {
         // Repeat For SpawnAmount
         for (int i = 0; i < spawnAmount; i++)
